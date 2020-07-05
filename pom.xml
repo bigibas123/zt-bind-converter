@@ -43,6 +43,7 @@
             <groupId>com.github.seancfoley</groupId>
             <artifactId>ipaddress</artifactId>
             <version>${iplib.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -55,11 +56,13 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <version>${apache.httpclient.version}</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
