@@ -2,12 +2,12 @@ package com.github.bigibas123.zt.bind.converter;
 
 import com.github.bigibas123.zt.bind.converter.model.networklist.Network;
 import com.google.gson.reflect.TypeToken;
-import lombok.SneakyThrows;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
@@ -22,12 +22,12 @@ public class ZerotierBindConverter {
 		getNetworks();
 	}
 
-	@SneakyThrows
 	private void getNetworks() {
 		this.log.info("Starting fetch of networks...");
 
 		Request req = Request.Get(Reference.API_ROOT + "/network").addHeader("Authorization", "bearer " + this.apiToken);
 
+		try {
 		Type list = new TypeToken<List<Network>>() {
 		}.getType();
 		Content cont = req.execute().returnContent();
@@ -42,6 +42,9 @@ public class ZerotierBindConverter {
 		}
 		this.log.info("Launching networkhandlers...");
 		new Thread(() -> networkHandlers.forEach(NetworkHandler::go)).start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
