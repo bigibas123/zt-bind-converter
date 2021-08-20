@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ZerotierBindConverter {
 
@@ -32,16 +33,10 @@ public class ZerotierBindConverter {
 		}.getType();
 		Content cont = req.execute().returnContent();
 		List<Network> networks = Reference.gson.fromJson(new InputStreamReader(cont.asStream()), list);
-		StringBuilder builder = new StringBuilder("Fetched networks: ");
-		networks.forEach(network -> builder.append(network.getConfig().getName()).append(", "));
-		this.log.info(builder.toString());
-
-		List<NetworkHandler> networkHandlers = new LinkedList<>();
-		for (Network network: networks) {
-			networkHandlers.add(new NetworkHandler(network, Reference.DOMAIN_PREFIX, this.apiToken));
-		}
+		this.log.info("Fetched networks: " + networks.stream().map(n -> n.getConfig().getName()).collect(Collectors.joining(", ")));
+		List<NetworkHandler> networkHandlers = networks.stream().map(network -> new NetworkHandler(network, Reference.DOMAIN_PREFIX, this.apiToken)).collect(Collectors.toCollection(LinkedList::new));
 		this.log.info("Launching networkhandlers...");
-		new Thread(() -> networkHandlers.forEach(NetworkHandler::go)).start();
+		networkHandlers.forEach(networkHandler -> new Thread(networkHandler::go).start());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

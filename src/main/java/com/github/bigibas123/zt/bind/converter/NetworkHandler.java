@@ -146,9 +146,9 @@ public class NetworkHandler {
 
 
 			if (ipAddressRange.getLower().isIPv6()) {
-				reverseDomain = Util.toReverseIPv6Domain(ipAddressRange.getLower().toIPv6().getNetworkSection().removePrefixLength());
+				reverseDomain = Util.toReverseIPv6Domain(ipAddressRange.getLower().toIPv6().getNetworkSection().withoutPrefixLength());
 			} else if (ipAddressRange.getLower().isIPv4()) {
-				reverseDomain = Util.toReverseIPv4Domain(ipAddressRange.getLower().toIPv4().getNetworkSection().removePrefixLength());
+				reverseDomain = Util.toReverseIPv4Domain(ipAddressRange.getLower().toIPv4().getNetworkSection().withoutPrefixLength());
 			} else {
 				continue;
 			}
@@ -165,12 +165,9 @@ public class NetworkHandler {
 
 	private void writeARecord(Appendable writer, String name, IPAddress ip) throws IOException {
 		if (ip.isIPv4() || ip.isIPv6()) {
-
 			if (ip.isIPv4()) {
-				writer.append(Util.formatRecord("ipv4." + name, "A", ip.toNormalizedString()));
 				writer.append(Util.formatRecord(name, "A", ip.toNormalizedString()));
 			} else if (ip.isIPv6()) {
-				writer.append(Util.formatRecord("ipv6." + name, "AAAA", ip.toNormalizedString()));
 				writer.append(Util.formatRecord(name, "AAAA", ip.toNormalizedString()));
 			}
 		} else {
