@@ -8,5 +8,5 @@ Converts all your zerotier networks to bind zone files
 	```
 2. Run the project with environment variables:
 	```
-    ZT_TOKEN="apitoken" MAIN_DOMAIN="example.com" PRIMARY_NS="ns.example.com"
+    ZT_TOKEN="apitoken" MAIN_DOMAIN="example.com" PRIMARY_NS="ns.example.com" java -jar target/zt-bind-converter-1.0-SNAPSHOT.jar
 	```
