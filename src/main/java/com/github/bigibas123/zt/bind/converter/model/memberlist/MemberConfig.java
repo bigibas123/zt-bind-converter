@@ -19,7 +19,7 @@ public class MemberConfig {
 	private String identity;
 	private List<IPAddress> ipAssignments;
 	private Long lastAuthorizedTime;
-	private Integer lastDeauthorizedTime;
+	private Long lastDeauthorizedTime;
 	private Boolean noAutoAssignIps;
 	private String nwid;
 	private String objtype;
