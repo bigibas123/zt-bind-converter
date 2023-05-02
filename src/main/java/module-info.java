@@ -1,5 +1,5 @@
 module zt.bind.converter {
-	requires logback.classic;
+	requires ch.qos.logback.classic;
 	requires com.google.gson;
 	requires inet.ipaddr;
 	requires org.apache.httpcomponents.httpclient.fluent;
