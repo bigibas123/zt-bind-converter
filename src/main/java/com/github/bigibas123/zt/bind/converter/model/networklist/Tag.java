@@ -9,11 +9,9 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 public class Tag {
-
 	private int id;
-	@SerializedName( "default" )
+	@SerializedName("default")
 	private int def;
 	private Map<String, Integer> enums;
 	private Map<String, Integer> flags;
-
 }

@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class MemberConfig {
-
 	private Boolean activeBridge;
 	private String address;
 	private Boolean authorized;
@@ -31,5 +30,4 @@ public class MemberConfig {
 	private Integer vMinor;
 	private Integer vRev;
 	private Integer vProto;
-
 }

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ZTMember {
-
 	private String id;
 	private String type;
 	private Long clock;
@@ -25,5 +24,4 @@ public class ZTMember {
 	private String clientVersion;
 	private Integer protocolVersion;
 	private Boolean supportsRulesEngine;
-
 }

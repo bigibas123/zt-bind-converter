@@ -6,7 +6,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Rule {
-
-   private String type;
-
+	private String type;
 }

@@ -29,15 +29,16 @@ public class ZerotierBindConverter {
 		Request req = Request.Get(Reference.API_ROOT + "/network").addHeader("Authorization", "bearer " + this.apiToken);
 
 		try {
-		Type list = new TypeToken<List<Network>>() {
-		}.getType();
-		Content cont = req.execute().returnContent();
-		List<Network> networks = Reference.gson.fromJson(new InputStreamReader(cont.asStream()), list);
-		this.log.info("Fetched networks: " + networks.stream().map(n -> n.getConfig().getName()).collect(Collectors.joining(", ")));
-		List<NetworkHandler> networkHandlers = networks.stream().map(network -> new NetworkHandler(network, Reference.DOMAIN_PREFIX, this.apiToken)).collect(Collectors.toCollection(LinkedList::new));
-		this.log.info("Launching networkhandlers...");
-		networkHandlers.forEach(networkHandler -> new Thread(networkHandler::go).start());
+			Type list = new TypeToken<List<Network>>() {
+			}.getType();
+			Content cont = req.execute().returnContent();
+			List<Network> networks = Reference.gson.fromJson(new InputStreamReader(cont.asStream()), list);
+			this.log.info("Fetched networks: " + networks.stream().map(n -> n.getConfig().getName()).collect(Collectors.joining(", ")));
+			List<NetworkHandler> networkHandlers = networks.stream().map(network -> new NetworkHandler(network, Reference.DOMAIN_PREFIX, this.apiToken)).collect(Collectors.toCollection(LinkedList::new));
+			this.log.info("Launching networkhandlers...");
+			networkHandlers.forEach(networkHandler -> new Thread(networkHandler::go).start());
 		} catch (IOException e) {
+			//noinspection CallToPrintStackTrace
 			e.printStackTrace();
 		}
 	}

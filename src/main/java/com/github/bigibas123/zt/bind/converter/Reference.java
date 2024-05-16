@@ -17,9 +17,10 @@ public class Reference {
 	public static final String DOMAIN_PREFIX = System.getenv("MAIN_DOMAIN");
 	public static final String PRIMARY_NS = System.getenv("PRIMARY_NS");
 	public static final Gson gson = (new GsonBuilder())
-		.registerTypeAdapter(IPAddress.class, new IPaddressAdapter())
-		.registerTypeAdapter(IPAddressRange.class, new IPAddressRangeAdapter())
-		.create();
+			.registerTypeAdapter(IPAddress.class, new IPaddressAdapter())
+			.registerTypeAdapter(IPAddressRange.class, new IPAddressRangeAdapter())
+			.create();
+	public static final boolean USE_HURRICANE = System.getenv().containsKey("USE_HURRICANE");
 	private static final Calendar cal = Calendar.getInstance();
 	public static final String currentDateString = "" + cal.get(Calendar.YEAR) + cal.get(Calendar.MONTH) + cal.get(Calendar.DAY_OF_MONTH) + "01";
 

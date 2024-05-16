@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class Route {
-
-   private IPAddressRange target;
-   private IPAddress via;
-
+	private IPAddressRange target;
+	private IPAddress via;
 }

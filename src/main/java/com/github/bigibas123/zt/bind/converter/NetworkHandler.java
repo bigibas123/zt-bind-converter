@@ -70,17 +70,20 @@ public class NetworkHandler {
 		if (dir.exists())
 			if (dir.isDirectory()) {
 				this.log.info("Removing old directory for: " + dir.getName());
-				Files.walk(dir.toPath(), new java.nio.file.FileVisitOption[0])
-					.sorted(Comparator.reverseOrder())
-					.map(Path::toFile)
-					.forEach(file -> {
 
-						if (file.delete()) {
-							this.log.debug("Deleted: " + file.getPath());
-						} else {
-							this.log.error("Failed deleting: " + file.getPath());
-						}
-					});
+				try (var fileStream = Files.walk(dir.toPath())) {
+					fileStream.sorted(Comparator.reverseOrder())
+							.map(Path::toFile)
+							.forEach(file -> {
+
+								if (file.delete()) {
+									this.log.debug("Deleted: " + file.getPath());
+								} else {
+									this.log.error("Failed deleting: " + file.getPath());
+								}
+							});
+				}
+
 			} else if (dir.delete()) {
 				this.log.debug("Deleted: " + dir.getPath());
 			} else {
@@ -111,9 +114,14 @@ public class NetworkHandler {
 
 					writeSOA(writer);
 
-					for (ZTMember member: this.members) {
+					writer.append(Util.formatRootNS(Reference.PRIMARY_NS + "."));
+					if (Reference.USE_HURRICANE) {
+						writer.append(Util.getHurricaneNS());
+					}
+
+					for (ZTMember member : this.members) {
 						String memberdomain = Util.dnsFormatMember(member);
-						for (IPAddress ip: member.getConfig().getIpAssignments()) {
+						for (IPAddress ip : member.getConfig().getIpAssignments()) {
 							writeARecord(writer, memberdomain, ip);
 						}
 					}
@@ -141,7 +149,7 @@ public class NetworkHandler {
 	@SneakyThrows
 	private void writeReverseZone() {
 		log.info("Starting reverse zone writing");
-		for (IPAddressRange ipAddressRange: Util.getLocalSubnets(this.network)) {
+		for (IPAddressRange ipAddressRange : Util.getLocalSubnets(this.network)) {
 			String reverseDomain;
 
 
@@ -190,9 +198,15 @@ public class NetworkHandler {
 
 					writeSOA(writer, reverseDomain);
 
-					for (ZTMember member: this.members) {
+					writer.append(Util.formatRootNS(Reference.PRIMARY_NS + "."));
+					if (Reference.USE_HURRICANE) {
+						writer.append(Util.getHurricaneNS());
+					}
+
+
+					for (ZTMember member : this.members) {
 						String memberdomain = Util.dnsFormatMember(member) + "." + prefix + ".";
-						for (IPAddress ip: member.getConfig().getIpAssignments()) {
+						for (IPAddress ip : member.getConfig().getIpAssignments()) {
 							if (!range.contains(ip)) continue;
 							writer.append(Util.formatReverseRecord(ip, memberdomain));
 						}
@@ -219,14 +233,14 @@ public class NetworkHandler {
 	}
 
 	private void writeSOA(Appendable writer, String domain) throws IOException {
-		writer.append(domain).append(" IN SOA ").append(Reference.PRIMARY_NS).append(" root.").append(Reference.PRIMARY_NS).append(". (\n")
-			.append("\t").append(Reference.currentDateString).append(" ;Serial\n")
-			.append("\t3600\t;Refresh\n")
-			.append("\t1800\t;Retry\n")
-			.append("\t604800\t;Expire\n")
-			.append("\t1800\t;Minimum TTL\n")
-			.append(")\n")
-			.append("@\tNS\t").append(Reference.PRIMARY_NS).append(".\n");
+		writer.append(domain).append(" IN SOA ").append(Reference.PRIMARY_NS).append(". root.").append(Reference.PRIMARY_NS).append(". (\n")
+				.append("\t").append(Reference.currentDateString).append(" ;Serial\n")
+				.append("\t3600\t;Refresh\n")
+				.append("\t1800\t;Retry\n")
+				.append("\t604800\t;Expire\n")
+				.append("\t1800\t;Minimum TTL\n")
+				.append(")\n")
+		;
 	}
 
 }

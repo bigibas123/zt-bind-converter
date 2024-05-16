@@ -60,7 +60,7 @@ public class Util {
 		StringBuilder reverseAddress = new StringBuilder();
 		List<IPv4AddressSegment> octets = Arrays.asList(address.getSegments());
 		Collections.reverse(octets);
-		for (IPv4AddressSegment octet: octets) {
+		for (IPv4AddressSegment octet : octets) {
 			reverseAddress.append(octet.toString()).append(".");
 		}
 		reverseAddress.append("in-addr.arpa.");
@@ -71,10 +71,10 @@ public class Util {
 		StringBuilder builder = new StringBuilder();
 		byte[] octets = address.getBytes();
 
-		for (Byte b: octets) {
+		for (Byte b : octets) {
 			String[] nibbles = String.format("%02X", b).split("");
 
-			for (String nibble: nibbles) {
+			for (String nibble : nibbles) {
 				builder.append(nibble).append(".");
 			}
 		}
@@ -86,7 +86,7 @@ public class Util {
 	public List<IPAddressRange> getLocalSubnets(Network network) {
 		List<IPAddressRange> list = new LinkedList<>();
 		network.getConfig().getRoutes().stream().filter((route) -> route.getVia() == null)
-			.forEach((route) -> list.add(route.getTarget()));
+				.forEach((route) -> list.add(route.getTarget()));
 		log.debug("Found local routes for network " + network.getConfig().getName() + ": " + list);
 		return list;
 	}
@@ -95,4 +95,15 @@ public class Util {
 		return member.getName().replace("-", ".").toLowerCase();
 	}
 
+	public static String formatRootNS(String nsServer) {
+		return formatRecord("@", "NS", nsServer);
+	}
+
+	public static String getHurricaneNS() {
+		StringBuilder builder = new StringBuilder();
+		for (int value = 1; value <= 5; value++) {
+			builder.append(Util.formatRootNS("ns" + value + ".he.net."));
+		}
+		return builder.toString();
+	}
 }
