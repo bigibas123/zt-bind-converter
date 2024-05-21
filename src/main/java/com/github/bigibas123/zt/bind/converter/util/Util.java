@@ -92,7 +92,7 @@ public class Util {
 	}
 
 	public String dnsFormatMember(ZTMember member) {
-		return member.getName().replace("-", ".").toLowerCase();
+		return member.getName().toLowerCase();
 	}
 
 	public static String formatRootNS(String nsServer) {
