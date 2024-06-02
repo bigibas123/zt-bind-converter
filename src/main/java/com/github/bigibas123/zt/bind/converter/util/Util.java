@@ -106,4 +106,11 @@ public class Util {
 		}
 		return builder.toString();
 	}
+
+	public static String formatEmail(String email) {
+		String[] parts = email.split("@");
+		String localPart = String.join("@", Arrays.copyOfRange(parts, 0, parts.length - 1));
+		String domain = parts[parts.length - 1];
+		return localPart.replace(".", "\\.").replace("@","\\@") + "." + domain;
+	}
 }

@@ -27,6 +27,11 @@ public class Main {
 			log.info("Environment variable \"MAIN_DOMAIN\" not set \n" +
 					"this is needed to know where to end all records with");
 		}
+		if(Reference.RESPONSIBLE_EMAIL == null){
+			correct = false;
+			log.info("Environment variable \"EMAIL\" not set\n" +
+					"this is needed to make a proper SOA record");
+		}
 		if (Reference.PRIMARY_NS == null) {
 			correct = false;
 			log.info("Environment variable \"PRIMARY_NS\" not set \n" +

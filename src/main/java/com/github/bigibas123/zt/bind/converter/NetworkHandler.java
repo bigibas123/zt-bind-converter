@@ -233,7 +233,7 @@ public class NetworkHandler {
 	}
 
 	private void writeSOA(Appendable writer, String domain) throws IOException {
-		writer.append(domain).append(" IN SOA ").append(Reference.PRIMARY_NS).append(". root.").append(Reference.PRIMARY_NS).append(". (\n")
+		writer.append(domain).append(" IN SOA ").append(Reference.PRIMARY_NS).append(". ").append(Util.formatEmail(Reference.RESPONSIBLE_EMAIL)).append(". (\n")
 				.append("\t").append(Reference.currentDateString).append(" ;Serial\n")
 				.append("\t3600\t;Refresh\n")
 				.append("\t1800\t;Retry\n")
