@@ -17,7 +17,7 @@
         <logback.version>1.5.20</logback.version>
         <iplib.version>5.5.1</iplib.version>
 
-        <maven.jar.plugin.version>3.4.2</maven.jar.plugin.version>
+        <maven.jar.plugin.version>3.5.0</maven.jar.plugin.version>
         <maven.shade.plugin.version>3.6.1</maven.shade.plugin.version>
         <maven.compiler.plugin.version>3.14.1</maven.compiler.plugin.version>
 
