@@ -18,7 +18,7 @@
         <iplib.version>5.6.2</iplib.version>
 
         <maven.jar.plugin.version>3.5.0</maven.jar.plugin.version>
-        <maven.shade.plugin.version>3.6.1</maven.shade.plugin.version>
+        <maven.shade.plugin.version>3.6.2</maven.shade.plugin.version>
         <maven.compiler.plugin.version>3.15.0</maven.compiler.plugin.version>
 
         <maven.compiler.source>21</maven.compiler.source>
